@@ -59,7 +59,7 @@
 
 <script defer>
 	async function generateShortURL(URL) {
-    	let data = await fetch("https://api.shrtco.de/v2/shorten?url=https://qrodex.github.io/IHPS?to=" + URL);
+    	let data = await fetch("https://api.shrtco.de/v2/shorten?url=https://qrodex.github.io/IHPS/verify?to=" + URL);
         let json = await data.json();
         document.getElementById("h4").style.display = "none"
         document.getElementById("url").innerText = json.result.full_short_link;
