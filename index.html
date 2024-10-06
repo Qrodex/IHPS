@@ -1,79 +1,95 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<title>QRodEX IHPS Verification System</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/futura-font@1.0.0/styles.min.css">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
-<style>
-	html {
-    	text-align:center;
-        display: flex;
-        justify-content: center;
-        place-items: center;
-        height: 100vh;
-        box-sizing: border-box;
-        background-image: url('https://source.unsplash.com/1600x900/?landscape');
-        background-repeat: no-repeat;
-        background-size: cover;
-    } input {
-    	padding: 10px;
-        width: 40vw;
-        text-align: center;
-    } * {
-    	font-family: FuturaBT-Medium;
-        outline: none;
-    } img {
-    	max-width: 15vw;
-    } div {
-        background: #fdfdfdab;
-        padding: 25px;
-        border-radius: 5px;
-        backdrop-filter: blur(20px);
-        border: lightgray solid 1px;
-    } h1 {
-        margin-top: 0;
-    }
-</style>
+    <title>QRodEX IHPS Verification System</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/futura-font@1.0.0/styles.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.1.0/faker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"
+        integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o=" crossorigin="anonymous"></script>
+    <style>
+        html {
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            place-items: center;
+            height: 100vh;
+            box-sizing: border-box;
+            background-image: url('https://source.unsplash.com/1600x900/?landscape');
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        input {
+            padding: 10px;
+            width: 40vw;
+            text-align: center;
+        }
+
+        * {
+            font-family: FuturaBT-Medium;
+            outline: none;
+        }
+
+        img {
+            max-width: 15vw;
+        }
+
+        div {
+            background: #fdfdfdab;
+            padding: 25px;
+            border-radius: 5px;
+            backdrop-filter: blur(20px);
+            border: lightgray solid 1px;
+        }
+
+        h1 {
+            margin-top: 0;
+        }
+    </style>
 </head>
+
 <body>
 
-<div>
-    <a id="url-a">
-        <h1 id="url">
-            Keep Silaters Off Your Website!<br>
-            <h4 id="h4">Use Our Verification Tool</h4>
-        </h1>
-    </a>
+    <div>
+        <a id="url-a">
+            <h1 id="url">
+                Keep Silaters Off Your Website!<br>
+                <h4 id="h4">Use Our Verification Tool</h4>
+            </h1>
+        </a>
 
-    <input onchange="generateShortURL(this.value)" placeholder="URL To Protect">
-</div>
+        <input onchange="generateShortURL(this.value)" placeholder="URL To Protect">
+    </div>
 
-<br>
+    <br>
 
-<div>
-    Funded by multiple organisations:<br><br>
-    <span id="orgs">
-        
-    </span>
-</div>
+    <div>
+        Funded by multiple organisations:<br><br>
+        <span id="orgs">
 
-<script defer>
-	async function generateShortURL(URL) {
-    	let data = await fetch("https://api.shrtco.de/v2/shorten?url=https://qrodex.github.io/IHPS/verify?to=" + URL);
-        let json = await data.json();
-        document.getElementById("h4").style.display = "none"
-        document.getElementById("url").innerText = json.result.full_short_link;
-        document.getElementById("url-a").href = document.getElementById("url").innerText;
-    }
+        </span>
+    </div>
 
-    let totalOrg = ``
+    <script defer>
+        async function generateShortURL(URL) {
+            // let data = await fetch("https://api.shrtco.de/v2/shorten?url=https://qrodex.github.io/IHPS/verify?to=" + URL);
+            // let json = await data.json();
+            const encryptedURL = CryptoJS.AES.encrypt(URL, "IHPS")
+            document.getElementById("h4").style.display = "none"
+            document.getElementById("url").innerText = `https://qrodex.github.io/IHPS/verify?to=${encryptedURL}`;
+            document.getElementById("url-a").href = document.getElementById("url").innerText;
+        }
 
-    for (let i = 0; i < 5 ; i++) {
-        let companyname = faker.company.companyName();
-        totalOrg = totalOrg + companyname + "<br>"
-        document.getElementById('orgs').innerHTML = totalOrg;
-    }
-</script>
+        let totalOrg = ``
+
+        for (let i = 0; i < 5; i++) {
+            let companyname = faker.company.companyName();
+            totalOrg = totalOrg + companyname + "<br>"
+            document.getElementById('orgs').innerHTML = totalOrg;
+        }
+    </script>
 
 </body>
+
 </html>
