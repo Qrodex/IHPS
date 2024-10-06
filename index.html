@@ -75,9 +75,12 @@
         async function generateShortURL(URL) {
             // let data = await fetch("https://api.shrtco.de/v2/shorten?url=https://qrodex.github.io/IHPS/verify?to=" + URL);
             // let json = await data.json();
-            const encryptedURL = CryptoJS.AES.encrypt(URL, "IHPS")
+            var encryptedURL = CryptoJS.AES.encrypt(URL, "IHPS")
+            var IHPSURL = new URL('https://qrodex.github.io/IHPS/verify')
+
+            IHPSURL.searchParams.append('to', encryptedURL);
             document.getElementById("h4").style.display = "none"
-            document.getElementById("url").innerText = `https://qrodex.github.io/IHPS/verify?to=${encryptedURL}`;
+            document.getElementById("url").innerText = IHPSURL;
             document.getElementById("url-a").href = document.getElementById("url").innerText;
         }
 
