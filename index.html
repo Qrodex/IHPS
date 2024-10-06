@@ -72,10 +72,10 @@
     </div>
 
     <script defer>
-        async function generateShortURL(URL) {
+        async function generateShortURL(tobeencryptedURL) {
             // let data = await fetch("https://api.shrtco.de/v2/shorten?url=https://qrodex.github.io/IHPS/verify?to=" + URL);
             // let json = await data.json();
-            var encryptedURL = CryptoJS.AES.encrypt(URL, "IHPS")
+            var encryptedURL = CryptoJS.AES.encrypt(tobeencryptedURL, "IHPS")
             var IHPSURL = new URL('https://qrodex.github.io/IHPS/verify')
 
             IHPSURL.searchParams.append('to', encryptedURL);
